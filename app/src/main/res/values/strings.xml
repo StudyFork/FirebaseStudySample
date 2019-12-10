@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FirebaseStudySample</string>
+
+    <string name="firebase_web_host">fir-studysample.firebaseapp.com</string>
+    <string name="github_client_id">77c1f9befc6bb4a0d638</string>
+    <string name="github_client_secret">6267b471622c84b914a559153cc5bd0dffd5aa73</string>
+
 </resources>
