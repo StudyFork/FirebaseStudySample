@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -24,6 +25,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         setupProfile()
         setupListener()
+
+        val db = FirebaseFirestore.getInstance()
     }
 
     private fun setupListener() {
