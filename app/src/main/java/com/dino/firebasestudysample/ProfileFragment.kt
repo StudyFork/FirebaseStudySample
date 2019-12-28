@@ -26,13 +26,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         setupProfile()
         setupListener()
 
-        val db = FirebaseFirestore.getInstance()
     }
 
     private fun setupListener() {
         iv_profile.setOnClickListener {
             TedImagePicker.with(context!!)
                 .start { uri -> uploadProfileImage(uri) }
+        }
+        btn_add_post.setOnClickListener {
+            AddPostActivity.startActivity(context)
         }
     }
 
