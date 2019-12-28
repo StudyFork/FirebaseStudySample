@@ -6,9 +6,9 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.dino.firebasestudysample.addpost.AddPostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -34,7 +34,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .start { uri -> uploadProfileImage(uri) }
         }
         btn_add_post.setOnClickListener {
-            AddPostActivity.startActivity(context)
+            TedImagePicker.with(context!!)
+                .max(20, "최대 20장까지 업로드")
+                .startMultiImage {
+                    if (it.isNotEmpty()) {
+                        AddPostActivity.startActivity(context, it)
+                    }
+                }
         }
     }
 
