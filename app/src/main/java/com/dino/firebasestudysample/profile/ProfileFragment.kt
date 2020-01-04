@@ -1,4 +1,4 @@
-package com.dino.firebasestudysample
+package com.dino.firebasestudysample.profile
 
 import android.net.Uri
 import android.os.Bundle
@@ -6,9 +6,13 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.dino.firebasestudysample.R
 import com.dino.firebasestudysample.addpost.AddPostActivity
+import com.dino.firebasestudysample.addpost.Post
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -17,15 +21,32 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val firebaseUser by lazy { FirebaseAuth.getInstance().currentUser ?: error("잘못 된 접근") }
 
-    private val storageRef =
+    private val profileImageStorageRef =
         FirebaseStorage.getInstance().reference.child("images/profile/${firebaseUser.email}.jpg")
+
+    private val postStorageRef =
+        FirebaseFirestore.getInstance().collection("posts")
+
+    private val profilePostAdapter = ProfilePostAdapter()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        rv_content.adapter = profilePostAdapter
         setupProfile()
         setupListener()
+        loadPosts()
+    }
 
+    private fun loadPosts() {
+        postStorageRef.orderBy("date", Query.Direction.DESCENDING)
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (querySnapshot?.isEmpty == false) {
+                    val list = querySnapshot.documents
+                        .map { it.toObject(Post::class.java)!! }
+                    profilePostAdapter.resetAll(list)
+                }
+            }
     }
 
     private fun setupListener() {
@@ -45,7 +66,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setupProfile() {
-        storageRef.downloadUrl
+        profileImageStorageRef.downloadUrl
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val result = task.result ?: return@addOnCompleteListener
@@ -59,14 +80,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun uploadProfileImage(uri: Uri) {
         showLoading()
-        storageRef.putFile(uri)
+        profileImageStorageRef.putFile(uri)
             .continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
                         throw it
                     }
                 }
-                storageRef.downloadUrl
+                profileImageStorageRef.downloadUrl
             }
             .addOnCompleteListener { storageTask ->
                 hideLoading()

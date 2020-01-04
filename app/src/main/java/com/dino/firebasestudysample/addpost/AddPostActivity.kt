@@ -39,14 +39,15 @@ class AddPostActivity : AppCompatActivity(R.layout.activity_add_post) {
 
     private fun uploadPost() {
         pb_loading.isVisible = true
-        val postDate = Date().toString()
+        val date = Date()
+        val postDate = date.toString()
         uploadImages(postDate) {
             if (it.size != images?.size ?: 0) {
                 return@uploadImages
             }
             val title = et_title.text.toString()
             val content = et_content.text.toString()
-            val post = Post(title, content, it.map { it.toString() })
+            val post = Post(title, content, date, it.map { it.toString() })
             db.document(postDate)
                 .set(post)
                 .addOnSuccessListener { finish() }
