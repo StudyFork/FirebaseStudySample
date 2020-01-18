@@ -1,4 +1,4 @@
-package com.dino.firebasestudysample.addpost
+package com.dino.firebasestudysample.ui.addpost
 
 import android.content.Context
 import android.content.Intent
@@ -47,7 +47,11 @@ class AddPostActivity : AppCompatActivity(R.layout.activity_add_post) {
             }
             val title = et_title.text.toString()
             val content = et_content.text.toString()
-            val post = Post(title, content, date, it.map { it.toString() })
+            val post = Post(
+                title,
+                content,
+                date,
+                it.map { it.toString() })
             db.document(postDate)
                 .set(post)
                 .addOnSuccessListener { finish() }

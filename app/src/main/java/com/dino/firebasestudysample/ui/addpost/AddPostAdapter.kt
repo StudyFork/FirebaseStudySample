@@ -1,4 +1,4 @@
-package com.dino.firebasestudysample.addpost
+package com.dino.firebasestudysample.ui.addpost
 
 import android.net.Uri
 import android.view.LayoutInflater

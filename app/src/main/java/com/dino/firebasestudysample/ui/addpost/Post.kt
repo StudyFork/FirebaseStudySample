@@ -1,4 +1,4 @@
-package com.dino.firebasestudysample.addpost
+package com.dino.firebasestudysample.ui.addpost
 
 import java.util.*
 

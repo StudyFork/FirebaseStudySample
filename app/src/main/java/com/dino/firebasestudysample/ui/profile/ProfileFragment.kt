@@ -1,4 +1,4 @@
-package com.dino.firebasestudysample.profile
+package com.dino.firebasestudysample.ui.profile
 
 import android.net.Uri
 import android.os.Bundle
@@ -7,8 +7,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.dino.firebasestudysample.R
-import com.dino.firebasestudysample.addpost.AddPostActivity
-import com.dino.firebasestudysample.addpost.Post
+import com.dino.firebasestudysample.ui.addpost.AddPostActivity
+import com.dino.firebasestudysample.ui.addpost.Post
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore

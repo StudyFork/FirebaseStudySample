@@ -1,10 +1,10 @@
-package com.dino.firebasestudysample
+package com.dino.firebasestudysample.ui
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.dino.firebasestudysample.R
 
 class MainActivity : AppCompatActivity() {
 

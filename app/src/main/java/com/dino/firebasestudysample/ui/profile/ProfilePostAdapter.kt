@@ -1,11 +1,11 @@
-package com.dino.firebasestudysample.profile
+package com.dino.firebasestudysample.ui.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dino.firebasestudysample.R
-import com.dino.firebasestudysample.addpost.Post
+import com.dino.firebasestudysample.ui.addpost.Post
 import com.dino.firebasestudysample.extension.toDateTime
 import kotlinx.android.synthetic.main.item_profile_post.view.*
 
