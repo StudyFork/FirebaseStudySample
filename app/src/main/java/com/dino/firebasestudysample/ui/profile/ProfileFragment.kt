@@ -7,8 +7,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.dino.firebasestudysample.R
+import com.dino.firebasestudysample.event.FirebaseEvent
 import com.dino.firebasestudysample.ui.addpost.AddPostActivity
 import com.dino.firebasestudysample.ui.addpost.Post
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,6 +20,8 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
+
+    private val firebaseAnalytics by lazy { FirebaseAnalytics.getInstance(context!!) }
 
     private val firebaseUser by lazy { FirebaseAuth.getInstance().currentUser ?: error("잘못 된 접근") }
 
@@ -51,10 +55,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun setupListener() {
         iv_profile.setOnClickListener {
+            firebaseAnalytics.logEvent(FirebaseEvent.CLICK_UPDATE_PROFILE, null)
             TedImagePicker.with(context!!)
                 .start { uri -> uploadProfileImage(uri) }
         }
         btn_add_post.setOnClickListener {
+            firebaseAnalytics.logEvent(FirebaseEvent.CLICK_ADD_POST, null)
             TedImagePicker.with(context!!)
                 .max(20, "최대 20장까지 업로드")
                 .startMultiImage {

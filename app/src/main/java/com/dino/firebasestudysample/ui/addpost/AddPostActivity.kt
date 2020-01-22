@@ -9,12 +9,17 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.dino.firebasestudysample.R
+import com.dino.firebasestudysample.event.FirebaseEvent
+import com.dino.firebasestudysample.event.FirebaseParam
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_add_post.*
 import java.util.*
 
 class AddPostActivity : AppCompatActivity(R.layout.activity_add_post) {
+
+    private val firebaseAnalytics by lazy { FirebaseAnalytics.getInstance(application) }
 
     private val db by lazy { FirebaseFirestore.getInstance().collection("posts") }
 
@@ -34,7 +39,14 @@ class AddPostActivity : AppCompatActivity(R.layout.activity_add_post) {
     }
 
     private fun setupListener() {
-        btn_add_post.setOnClickListener { uploadPost() }
+        btn_add_post.setOnClickListener {
+            firebaseAnalytics.logEvent(
+                FirebaseEvent.CLICK_POST, bundleOf(
+                    FirebaseParam.POST_COUNT to images?.size
+                )
+            )
+            uploadPost()
+        }
     }
 
     private fun uploadPost() {
